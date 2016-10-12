@@ -1,0 +1,12 @@
+{
+    "name": "security/sentinel",
+    "description": "The antivirus sentinel Laravel package",
+    "authors": [
+        {
+            "name": "Dariusz Rorat",
+            "email": "dariusz.rorat@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
