@@ -2,7 +2,8 @@
     "name": "dariuszrorat/security",
     "description": "The Laravel security packages",
     "license": "MIT",
-    "type": "",
+    "type": "package",
+    "keywords": ["security","sentinel"],
     "authors": [
         {
             "name": "Dariusz Rorat",
