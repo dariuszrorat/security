@@ -13,5 +13,10 @@
     "require": {
         "php": ">=5.4",
         "laravel/framework": ">=5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Security\\Sentinel\\": "sentinel/src/"
+        }
     }
 }
