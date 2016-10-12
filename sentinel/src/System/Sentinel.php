@@ -1,15 +1,13 @@
 <?php
 
-namespace Security\Sentinel;
+namespace Security\Sentinel\System;
 
 use Illuminate\Support\Facades\Mail;
+use Security\Sentinel\System\Inspectors\FileInspector;
+use Security\Sentinel\System\Archivers\ZipArchiver;
 
 class Sentinel
 {
-    const NOTHING = 00;
-    const QUARANTINE = 10;
-    const REPAIR = 20;
-    const DELETE = 30;
 
     private $config = [];
     private $registered = [];
@@ -47,7 +45,7 @@ class Sentinel
     public function registerFiles()
     {
         $directories = $this->config['directories']['scanned'];
-        $inspector = new FilesystemInspector($this->config);
+        $inspector = new FileInspector($this->config);
 
         foreach ($directories as $dir)
         {
@@ -64,7 +62,7 @@ class Sentinel
 
     public function findModifiedFiles()
     {
-        $inspector = new FilesystemInspector($this->config);
+        $inspector = new FileInspector($this->config);
         $registered = $inspector->findRegisteredFiles();
 
         foreach ($registered as $item)
@@ -99,7 +97,7 @@ class Sentinel
 
     public function findUnregisteredFiles()
     {
-        $inspector = new FilesystemInspector($this->config);
+        $inspector = new FileInspector($this->config);
         $registered = $inspector->findRegisteredFiles();
         $directories = $this->config['directories']['scanned'];
 
@@ -121,7 +119,7 @@ class Sentinel
 
     public function findDeletedFiles()
     {
-        $inspector = new FilesystemInspector($this->config);
+        $inspector = new FileInspector($this->config);
         $registered = $inspector->findRegisteredFiles();
         $directories = $this->config['directories']['scanned'];
 
@@ -143,7 +141,7 @@ class Sentinel
 
     public function updateChecksum($index)
     {
-        $inspector = new FilesystemInspector($this->config);
+        $inspector = new FileInspector($this->config);
         $registered = $inspector->findRegisteredFiles();
 
         if (!empty($registered))
@@ -157,7 +155,7 @@ class Sentinel
 
     public function backupFiles()
     {
-        $inspector = new FilesystemInspector($this->config);
+        $inspector = new FileInspector($this->config);
         $registered = $inspector->findRegisteredFiles();
         if (!empty($registered))
         {

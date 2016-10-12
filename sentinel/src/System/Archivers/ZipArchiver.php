@@ -1,6 +1,6 @@
 <?php
 
-namespace Security\Sentinel;
+namespace Security\Sentinel\System\Archivers;
 
 class ZipArchiver
 {

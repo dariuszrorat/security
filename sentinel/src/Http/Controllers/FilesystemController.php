@@ -1,16 +1,17 @@
 <?php
 
-namespace Security\Sentinel;
+namespace Security\Sentinel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Security\Sentinel\System\Sentinel;
 
-class SentinelController extends Controller
+class FilesystemController extends Controller
 {
 
     public function index()
     {
-        return view('sentinel::sentinel');
+        return view('sentinel::filesystem');
     }
 
     public function register()
@@ -49,7 +50,7 @@ class SentinelController extends Controller
     {
         $sentinel = new Sentinel;
         $result = $sentinel->backupFiles();
-        $result = array('result' => $result);
+        $result = ['result' => $result];
         return response()->json($result);
     }
 

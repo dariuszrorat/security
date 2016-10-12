@@ -1,8 +1,8 @@
 <?php
 
-namespace Security\Sentinel;
+namespace Security\Sentinel\System\Inspectors;
 
-class FilesystemInspector
+class FileInspector
 {
 
     private $config;

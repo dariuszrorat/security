@@ -1,9 +1,9 @@
 <?php
 
-Route::get('sentinel', 'security\sentinel\SentinelController@index');
-Route::get('sentinel/register', 'security\sentinel\SentinelController@register');
-Route::get('sentinel/unregistered', 'security\sentinel\SentinelController@unregistered');
-Route::get('sentinel/modified', 'security\sentinel\SentinelController@modified');
-Route::get('sentinel/deleted', 'security\sentinel\SentinelController@deleted');
-Route::get('sentinel/backup', 'security\sentinel\SentinelController@backup');
-Route::post('sentinel/updateone', 'security\sentinel\SentinelController@updateone');
+Route::get('sentinel/filesystem',              'Security\Sentinel\Http\Controllers\FilesystemController@index');
+Route::get('sentinel/filesystem/register',     'Security\Sentinel\Http\Controllers\FilesystemController@register');
+Route::get('sentinel/filesystem/unregistered', 'Security\Sentinel\Http\Controllers\FilesystemController@unregistered');
+Route::get('sentinel/filesystem/modified',     'Security\Sentinel\Http\Controllers\FilesystemController@modified');
+Route::get('sentinel/filesystem/deleted',      'Security\Sentinel\Http\Controllers\FilesystemController@deleted');
+Route::get('sentinel/filesystem/backup',       'Security\Sentinel\Http\Controllers\FilesystemController@backup');
+Route::post('sentinel/filesystem/updateone',   'Security\Sentinel\Http\Controllers\FilesystemController@updateone');

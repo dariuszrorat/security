@@ -24,7 +24,7 @@ class SentinelServiceProvider extends ServiceProvider
     public function register()
     {
         include __DIR__.'/routes.php';
-        $this->app->make('Security\Sentinel\SentinelController');
+        $this->app->make('Security\Sentinel\Http\Controllers\FilesystemController');
 
         $this->mergeConfigFrom(
             __DIR__.'/config/sentinel.php', 'sentinel'

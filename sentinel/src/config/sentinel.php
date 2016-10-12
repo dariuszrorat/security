@@ -5,9 +5,9 @@ return [
             'scanned' => [
                 app_path(),
             ],
-            'backup' => storage_path('sentinel/backup'),
-            'logs' => storage_path('sentinel/logs'),
-            'quarantine' => storage_path('sentinel/quarantine'),
+            'backup' => storage_path('sentinel/filesystem/backup'),
+            'logs' => storage_path('sentinel/filesystem/logs'),
+            'quarantine' => storage_path('sentinel/filesystem/quarantine'),
         ],
         'ignored' => [
             'directories' => [
@@ -27,12 +27,13 @@ return [
         'inspection' => [
             'checksum_storage' => [
                 'type' => 'file',
-                'directory' => storage_path('sentinel/inspection'),
+                'directory' => storage_path('sentinel/filesystem/inspection'),
             ],
             'self_inspection' => true,
             'on_detection' => null,
             'caching'      => false,
             'cache_life'   => 1209600,
+            'logging'      => true,
         ],
         'quarantine' => [
             'maxlife' => 604800,
