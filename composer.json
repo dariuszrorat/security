@@ -1,0 +1,12 @@
+{
+    "name": "dariuszrorat/security",
+    "description": "The Laravel security packages",
+    "authors": [
+        {
+            "name": "Dariusz Rorat",
+            "email": "dariusz.rorat@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
