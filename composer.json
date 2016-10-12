@@ -1,6 +1,8 @@
 {
     "name": "dariuszrorat/security",
     "description": "The Laravel security packages",
+    "license": "MIT",
+    "type": ""
     "authors": [
         {
             "name": "Dariusz Rorat",
@@ -8,5 +10,8 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "php": ">=5.4",
+        "laravel/framework": ">=5.1"
+    },
 }
