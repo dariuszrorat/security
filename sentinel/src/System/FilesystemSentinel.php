@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Mail;
 use Security\Sentinel\System\Inspectors\FileInspector;
 use Security\Sentinel\System\Archivers\ZipArchiver;
 
-class Sentinel
+class FilesystemSentinel
 {
 
     private $config = [];
@@ -44,7 +44,7 @@ class Sentinel
 
     public function registerFiles()
     {
-        $directories = $this->config['directories']['scanned'];
+        $directories = $this->config['filesystem']['directories']['scanned'];
         $inspector = new FileInspector($this->config);
 
         foreach ($directories as $dir)
@@ -67,16 +67,16 @@ class Sentinel
 
         foreach ($registered as $item)
         {
-            $file = $item->file;
+            $file = $item['file'];
 
             if (realpath($file))
             {
-                $index = $item->index;
-                $checksum = $item->checksum;
+                $index = $item['index'];
+                $checksum = $item['checksum'];
                 $fchecksum = md5_file($file);
                 if ($checksum !== $fchecksum)
                 {
-                    $this->modified[] = (object) [
+                    $this->modified[] = [
                         'index' => $index,
                         'file' => $file,
                         'original_checksum' => $checksum,
@@ -99,7 +99,7 @@ class Sentinel
     {
         $inspector = new FileInspector($this->config);
         $registered = $inspector->findRegisteredFiles();
-        $directories = $this->config['directories']['scanned'];
+        $directories = $this->config['filesystem']['directories']['scanned'];
 
         foreach ($directories as $dir)
         {
@@ -121,11 +121,11 @@ class Sentinel
     {
         $inspector = new FileInspector($this->config);
         $registered = $inspector->findRegisteredFiles();
-        $directories = $this->config['directories']['scanned'];
+        $directories = $this->config['filesystem']['directories']['scanned'];
 
         foreach ($registered as $item)
         {
-            if (!realpath($item->file))
+            if (!realpath($item['file']))
             {
                 $this->deleted[] = $item;
             }
@@ -146,8 +146,8 @@ class Sentinel
 
         if (!empty($registered))
         {
-            $file = $registered[$index]->file;
-            $registered[$index]->checksum = md5_file($file);
+            $file = $registered[$index]['file'];
+            $registered[$index]['checksum'] = md5_file($file);
             return $inspector->save('registered.ser', $registered);
         }
         return false;
@@ -159,8 +159,8 @@ class Sentinel
         $registered = $inspector->findRegisteredFiles();
         if (!empty($registered))
         {
-            $backupdir = $this->config['directories']['backup'];
-            $type = $this->config['compression']['type'];
+            $backupdir = $this->config['filesystem']['directories']['backup'];
+            $type = $this->config['filesystem']['compression']['type'];
             $archiver = new ZipArchiver;
             $dest = sprintf('%s.zip', join(DIRECTORY_SEPARATOR, [$backupdir, date('Y_m_d')]));
             $result = $archiver->compress($registered, $dest);
@@ -180,15 +180,15 @@ class Sentinel
                 {
                     if ($modified === true)
                     {
-                        $results .= "<P><B>File: </B>" . $item->file
-                          . "<BR><B>Original checksum: </B>" . $item->original_checksum
-                          . "<BR><B>New checksum: </B>" . $item->new_checksum
+                        $results .= "<P><B>File: </B>" . $item['file']
+                          . "<BR><B>Original checksum: </B>" . $item['original_checksum']
+                          . "<BR><B>New checksum: </B>" . $item['new_checksum']
                           . "</P>";
                     }
                     else
                     {
-                        $results .= "<P><B>File: </B>" . $item->file
-                          . "<BR><B>Checksum: </B>" . $item->checksum
+                        $results .= "<P><B>File: </B>" . $item['file']
+                          . "<BR><B>Checksum: </B>" . $item['checksum']
                           . "</P>";
                     }
                 }
@@ -213,4 +213,4 @@ class Sentinel
 
 }
 
-// Sentinel
+// FilesystemSentinel

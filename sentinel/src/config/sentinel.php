@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'filesystem' => [
         'directories' => [
             'scanned' => [
                 app_path(),
@@ -39,17 +40,18 @@ return [
             'maxlife' => 604800,
             'gc' => 500
         ],
-        'autoresponder' => [
-            'driver' => 'email',
-            'enabled' => true,
-            'project_name' => 'Laravel APP',
-            'email' => [
-                'sender'    => 'sender@domain',
-                'recipient' => 'recipient@domain',
-                'mime_type' => 'text/html',
-            ],
-            'sms' => [
-                'recipient' => 'your phone number',
-            ],
-        ]
+    ],
+    'autoresponder' => [
+        'driver' => 'email',
+        'enabled' => true,
+        'project_name' => 'Laravel APP',
+        'email' => [
+            'sender'    => 'sender@domain',
+            'recipient' => 'recipient@domain',
+            'mime_type' => 'text/html',
+        ],
+        'sms' => [
+            'recipient' => 'your phone number',
+        ],
+    ]
 ];

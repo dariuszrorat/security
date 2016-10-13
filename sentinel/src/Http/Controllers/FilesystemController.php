@@ -4,10 +4,16 @@ namespace Security\Sentinel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Security\Sentinel\System\Sentinel;
+use Security\Sentinel\System\FilesystemSentinel;
 
 class FilesystemController extends Controller
 {
+    private $sentinel;
+
+    public function __construct(FilesystemSentinel $sentinel)
+    {
+        $this->sentinel = $sentinel;
+    }
 
     public function index()
     {
@@ -16,50 +22,44 @@ class FilesystemController extends Controller
 
     public function register()
     {
-        $sentinel = new Sentinel;
-        $sentinel->registerFiles();
-        $registered = $sentinel->getRegistered();
-        return response()->json($registered);
+        $this->sentinel->registerFiles();
+        $result = $this->sentinel->getRegistered();
+        return response()->json($result);
     }
 
     public function unregistered()
     {
-        $sentinel = new Sentinel;
-        $sentinel->findUnregisteredFiles();
-        $unregistered = $sentinel->getUnregistered();
-        return response()->json($unregistered);
+        $this->sentinel->findUnregisteredFiles();
+        $result = $this->sentinel->getUnregistered();
+        return response()->json($result);
     }
 
     public function modified()
     {
-        $sentinel = new Sentinel;
-        $sentinel->findModifiedFiles();
-        $modified = $sentinel->getModified();
-        return response()->json($modified);
+        $this->sentinel->findModifiedFiles();
+        $result = $this->sentinel->getModified();
+        return response()->json($result);
     }
 
     public function deleted()
     {
-        $sentinel = new Sentinel;
-        $sentinel->findDeletedFiles();
-        $deleted = $sentinel->getDeleted();
-        return response()->json($deleted);
+        $this->sentinel->findDeletedFiles();
+        $result = $this->sentinel->getDeleted();
+        return response()->json($result);
     }
 
     public function backup()
     {
-        $sentinel = new Sentinel;
-        $result = $sentinel->backupFiles();
-        $result = ['result' => $result];
+        $backupresult = $this->sentinel->backupFiles();
+        $result = ['result' => $backupresult];
         return response()->json($result);
     }
 
     public function updateone(Request $request)
     {
         $id = $request->input('id');
-        $sentinel = new Sentinel;
-        $result = $sentinel->updateChecksum($id);
-        $output = ['result' => $result];
+        $updateresult = $this->sentinel->updateChecksum($id);
+        $output = ['result' => $updateresult];
         return response()->json($output);
     }
 

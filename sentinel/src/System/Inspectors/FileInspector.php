@@ -31,11 +31,11 @@ class FileInspector
         if ($file->isFile())
         {
             $fpath = $file->getRealPath();
-            if (!in_array($file->getFilename(), $this->config['ignored']['files']))
+            if (!in_array($file->getFilename(), $this->config['filesystem']['ignored']['files']))
             {
                 $checksum = md5_file($fpath);
                 $this->index += 1;
-                $this->registered[] = (object) [
+                $this->registered[] = [
                     'index' => $this->index,
                     'file' => $fpath,
                     'checksum' => $checksum
@@ -43,7 +43,7 @@ class FileInspector
             }
         } elseif ($file->isDir())
         {
-            if (!in_array($file->getPathname(), $this->config['ignored']['directories']))
+            if (!in_array($file->getPathname(), $this->config['filesystem']['ignored']['directories']))
             {
                 $files = new \DirectoryIterator($file->getPathname());
 
@@ -71,11 +71,11 @@ class FileInspector
         if ($file->isFile())
         {
             $fpath = $file->getRealPath();
-            if (!in_array($file->getFilename(), $this->config['ignored']['files']) && !$this->inList($fpath, $checksums))
+            if (!in_array($file->getFilename(), $this->config['filesystem']['ignored']['files']) && !$this->inList($fpath, $checksums))
             {
                 $checksum = md5_file($fpath);
                 $this->index += 1;
-                $this->unregistered[] = (object) [
+                $this->unregistered[] = [
                     'index' => $this->index,
                     'file' => $fpath,
                     'checksum' => $checksum
@@ -83,7 +83,7 @@ class FileInspector
             }
         } elseif ($file->isDir())
         {
-            if (!in_array($file->getPathname(), $this->config['ignored']['directories']))
+            if (!in_array($file->getPathname(), $this->config['filesystem']['ignored']['directories']))
             {
                 $files = new \DirectoryIterator($file->getPathname());
                 while ($files->valid())
@@ -105,7 +105,7 @@ class FileInspector
 
     public function findRegisteredFiles()
     {
-        $checkdir = $this->config['inspection']['checksum_storage']['directory'];
+        $checkdir = $this->config['filesystem']['inspection']['checksum_storage']['directory'];
         $checkfile = $checkdir . DIRECTORY_SEPARATOR . 'registered.ser';
         $registered = [];
 
@@ -119,7 +119,7 @@ class FileInspector
 
     public function save($file, $data)
     {
-        $outdir = $this->config['inspection']['checksum_storage']['directory'];
+        $outdir = $this->config['filesystem']['inspection']['checksum_storage']['directory'];
         $outfile = $outdir . DIRECTORY_SEPARATOR . $file;
         file_put_contents($outfile, serialize($data), LOCK_EX);
         return true;
@@ -129,7 +129,7 @@ class FileInspector
     {
         foreach ($list as $item)
         {
-            if ($item->file == $file)
+            if ($item['file'] == $file)
             {
                 return true;
             }

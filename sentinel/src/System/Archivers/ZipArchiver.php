@@ -31,7 +31,7 @@ class ZipArchiver
 
         foreach ($source as $src)
         {
-            $file = $src->file;
+            $file = $src['file'];
             $zip->addFile($file);
         }
         return $zip->close();
