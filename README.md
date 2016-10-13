@@ -5,7 +5,7 @@ of PHP scripts for viruses and malware.
 
 ## Usage
 
- 1. Enter: `http://yoursite.com/sentinel`
+ 1. Enter: `http://yoursite.com/sentinel/filesystem`
  2. First register Your files
  3. Create backup
  4. Later find unregistered (not in list), deleted or modified files
@@ -26,6 +26,7 @@ sentinel.php
 
 ```php
 return [
+    'filesystem' => [
         'directories' => [
             'scanned' => [
                 app_path(),
@@ -64,19 +65,20 @@ return [
             'maxlife' => 604800,
             'gc' => 500
         ],
-        'autoresponder' => [
-            'driver' => 'email',
-            'enabled' => true,
-            'project_name' => 'Laravel APP',
-            'email' => [
-                'sender'    => 'sender@domain',
-                'recipient' => 'recipient@domain',
-                'mime_type' => 'text/html',
-            ],
-            'sms' => [
-                'recipient' => 'your phone number',
-            ],
-        ]
+    ],
+    'autoresponder' => [
+        'driver' => 'email',
+        'enabled' => true,
+        'project_name' => 'Laravel APP',
+        'email' => [
+            'sender'    => 'sender@domain',
+            'recipient' => 'recipient@domain',
+            'mime_type' => 'text/html',
+        ],
+        'sms' => [
+            'recipient' => 'your phone number',
+        ],
+    ]
 ];
 ```
 
